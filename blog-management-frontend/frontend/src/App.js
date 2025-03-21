@@ -18,18 +18,18 @@ function App() {
       <Header />
       <main>
         <Routes>
-          {/* Public routes */}
+          {/* Public Routes */}
           <Route path="/" element={<PostList />} />
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          
-          {/* Protected or user-specific routes */}
+
+          {/* Protected Routes (Require Authentication) */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/posts/new" element={<CreatePost />} />
           <Route path="/posts/:id/edit" element={<EditPost />} />
-          
-          {/* Fallback route */}
+
+          {/* 404 Page */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
