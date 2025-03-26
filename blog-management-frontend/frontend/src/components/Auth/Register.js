@@ -14,7 +14,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post('/auth/register', formData);
+      await API.post('/auth/signup', formData);
       navigate('/login'); // Redirect to login after successful registration
     } catch (error) {
       console.error('Registration failed:', error.response.data);

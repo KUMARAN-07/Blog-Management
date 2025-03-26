@@ -1,4 +1,3 @@
-// frontend/src/components/Posts/PostList.js
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../../services/api';
@@ -14,7 +13,7 @@ const PostList = () => {
 
   return (
     <div>
-      <h2>All Posts</h2>
+      <h2>All Blog Posts</h2>
       {posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
@@ -27,7 +26,6 @@ const PostList = () => {
           </div>
         ))
       )}
-      <Link to="/posts/new">Create New Post</Link>
     </div>
   );
 };
