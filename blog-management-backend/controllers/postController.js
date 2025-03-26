@@ -75,4 +75,23 @@ const updatePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getAllPosts, getPostById, deletePost, updatePost };
+const getUserPosts = async (req, res) => {
+  try {
+    console.log("User ID from request:", req.user?.id); 
+
+    if (!req.user) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    const posts = await Post.find({ author: req.user.id }); 
+    console.log("Fetched Posts:", posts); 
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Error fetching user posts:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+
+module.exports = { createPost, getAllPosts, getPostById, deletePost, updatePost, getUserPosts };
