@@ -13,7 +13,22 @@ API.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error('Request Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Add response interceptor for better error handling
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('Response Error:', error.response || error);
+    if (error.response?.status === 500) {
+      console.error('Server Error Details:', error.response.data);
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default API;

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import API from '../../services/api';
+import styles from '../../styles/Posts.module.css';
 
 const PostDetail = () => {
   const { id } = useParams();  // Get post ID from URL
@@ -32,20 +33,41 @@ const PostDetail = () => {
   if (!post) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h2>{post.title}</h2>
-      <p>{post.content}</p>
-      <p>By: {post.author?.username}</p>
+    <div className={styles.postDetailContainer}>
+      <div className={styles.postDetailHeader}>
+        <h1 className={styles.postDetailTitle}>{post.title}</h1>
+        <div className={styles.postDetailMeta}>
+          <span>By {post.author?.username}</span>
+          <span>•</span>
+          <span>{new Date(post.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}</span>
+        </div>
+      </div>
 
-      {/* Only show Edit & Delete if logged-in user is the post author */}
-      {user && post.author?._id === user._id && (
-        <>
-          <Link to={`/posts/${post._id}/edit`}>
-            <button>Edit</button>
-          </Link>
-          <button onClick={handleDelete}>Delete</button>
-        </>
-      )}
+      <div className={styles.postDetailContent}>
+        {post.content.split('\n').map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
+        ))}
+      </div>
+
+      <div className={styles.postDetailActions}>
+        {user && post.author?._id === user._id && (
+          <>
+            <Link to={`/posts/${post._id}/edit`} className={styles.editButton}>
+              Edit Post
+            </Link>
+            <button onClick={handleDelete} className={styles.deleteButton}>
+              Delete Post
+            </button>
+          </>
+        )}
+        <Link to="/" className={styles.backButton}>
+          Back to Posts
+        </Link>
+      </div>
     </div>
   );
 };

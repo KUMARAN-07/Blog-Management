@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import API from '../../services/api';
+import styles from '../../styles/Posts.module.css';
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -47,27 +48,41 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <h2>Welcome, {user?.username}!</h2>
+    <div className={styles.postContainer}>
+      <div className={styles.dashboardHeader}>
+        <h2>Welcome, {user?.username}!</h2>
+        <Link to="/posts/create" className={styles.createButton}>
+          Create New Post
+        </Link>
+      </div>
       <h3>Your Posts</h3>
-      {userPosts.length === 0 ? (
-        <p>No posts yet.</p>
-      ) : (
-        userPosts.map((post) => (
-          <div key={post._id}>
-            <h4>{post.title}</h4>
-            <p>{post.content.substring(0, 100)}...</p>
-            
-            {/* Edit Button */}
-            <Link to={`/posts/${post._id}/edit`}>
-              <button>Edit</button>
-            </Link>
-
-            {/* Delete Button */}
-            <button onClick={() => handleDelete(post._id)}>Delete</button>
-          </div>
-        ))
-      )}
+      <div className={styles.postList}>
+        {userPosts.length === 0 ? (
+          <p>No posts yet.</p>
+        ) : (
+          userPosts.map((post) => (
+            <div key={post._id} className={styles.postCard}>
+              <div className={styles.postContent}>
+                <h3 className={styles.postTitle}>
+                  <Link to={`/posts/${post._id}`}>{post.title}</Link>
+                </h3>
+                <div className={styles.postMeta}>
+                  <span>{post.author?.username}</span>
+                  <span> • </span>
+                  <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                </div>
+                <p className={styles.postExcerpt}>{post.content.substring(0, 150)}...</p>
+                <div style={{ marginTop: '1rem' }}>
+                  <Link to={`/posts/${post._id}/edit`}>
+                    <button style={{ marginRight: '0.5rem' }}>Edit</button>
+                  </Link>
+                  <button onClick={() => handleDelete(post._id)}>Delete</button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

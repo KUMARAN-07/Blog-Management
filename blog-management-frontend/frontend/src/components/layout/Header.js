@@ -4,11 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 const Header = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem('token');
+    setUser(null);
     navigate('/login');
   };
 

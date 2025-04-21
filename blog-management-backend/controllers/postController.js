@@ -3,11 +3,21 @@ const Post = require('../models/Post');
 // @desc    Create a new blog post
 const createPost = async (req, res) => {
   const { title, content } = req.body;
+
+  // Validate request body
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Title and content are required' });
+  }
+
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
     const newPost = await Post.create({
-      title,
-      content,
-      author: req.user._id, // Retrieved from authMiddleware
+      title: title.trim(),
+      content: content.trim(),
+      author: req.user._id,
     });
     res.status(201).json(newPost);
   } catch (error) {
@@ -45,7 +55,7 @@ const deletePost = async (req, res) => {
     if (post.author.toString() !== req.user._id.toString())
       return res.status(401).json({ message: 'Not authorized to delete this post' });
 
-    await post.remove();
+    await Post.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'Post removed successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -83,7 +93,7 @@ const getUserPosts = async (req, res) => {
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const posts = await Post.find({ author: req.user.id }); 
+    const posts = await Post.find({ author: req.user.id }).populate('author', 'username email'); 
     console.log("Fetched Posts:", posts); 
 
     res.status(200).json(posts);

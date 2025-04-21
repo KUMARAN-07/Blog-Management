@@ -1,36 +1,22 @@
 // frontend/src/components/Layout/Footer.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from '../../styles/Footer.module.css';
 
 const Footer = () => {
   return (
-    <footer style={styles.footer}>
-      <p>&copy; {new Date().getFullYear()} My Blog. All rights reserved.</p>
-      <nav>
-        <ul style={styles.navList}>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-        </ul>
-      </nav>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <p className={styles.copyright}>&copy; {new Date().getFullYear()} My Blog. All rights reserved.</p>
+        <nav>
+          <ul className={styles.navList}>
+            <li><Link to="/about" className={styles.navLink}>About</Link></li>
+            <li><Link to="/contact" className={styles.navLink}>Contact</Link></li>
+          </ul>
+        </nav>
+      </div>
     </footer>
   );
-};
-
-// Simple inline styles
-const styles = {
-  footer: {
-    textAlign: 'center',
-    padding: '10px',
-    background: '#222',
-    color: 'white',
-    marginTop: '20px',
-  },
-  navList: {
-    listStyle: 'none',
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
-  },
 };
 
 export default Footer;

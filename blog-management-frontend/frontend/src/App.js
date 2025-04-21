@@ -1,5 +1,6 @@
 // frontend/src/App.js
 import React from 'react';
+import './styles/global.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
@@ -26,7 +27,7 @@ function App() {
 
           {/* Protected Routes (Require Authentication) */}
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/posts/new" element={<CreatePost />} />
+          <Route path="/posts/create" element={<CreatePost />} />
           <Route path="/posts/:id/edit" element={<EditPost />} />
 
           {/* 404 Page */}
