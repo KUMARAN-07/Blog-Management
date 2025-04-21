@@ -28,7 +28,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'my-backend-app' # Your App Service name
+          app-name: 'BM-backend' # Your App Service name
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: backend.zip
