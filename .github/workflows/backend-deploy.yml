@@ -19,7 +19,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        working-directory: ./backend
+        working-directory: ./blog-management-backend
         run: npm install
 
       - name: Zip backend folder
